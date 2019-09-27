@@ -4,8 +4,10 @@ let inputKey = document.getElementById("key");
 let inputTitle = document.getElementById("title");
 let inputContent = document.getElementById("content");
 
-function autosave(){
-	let id
+function autosave(dcreation, id){
+	console.log(dcreation);
+	console.log(id);
+	console.log(inputContent.value);
 }
 
 function idNote(){
@@ -17,7 +19,7 @@ function idNote(){
 
 	inputContent.removeEventListener("input", idNote);
 
-	setInterval(autosave, 10000);
+	setInterval(autosave(dcreation, id), 10000);
 }
 
 inputContent.addEventListener("input", idNote);
