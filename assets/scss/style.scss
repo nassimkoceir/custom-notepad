@@ -1,0 +1,53 @@
+* {
+	box-sizing: border-box;
+	transition: all 0.15s ease;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+#app {
+	width: 100%;
+
+	input {
+		border: none;
+		border-bottom: 2px solid transparent;
+		width: 100%;
+		font-size: 2rem;
+		padding: 10px;
+		background: #fcfcfc;
+	}
+
+	input:focus {
+		border-bottom: 2px solid #eee;
+	}
+
+	textarea {
+		width: 100%;
+		min-height: 300px;
+		border: none;
+		font-size: 1rem;
+		font-family: sans-serif;
+		padding: 10px;
+		resize: none;
+	}
+}
+
+#history {
+	width: 100%;
+	background: #eee;
+}
+
+footer {
+	width: 100%;
+	background: #dfdfdf;
+	text-align: center;
+	padding: 10px;
+}
