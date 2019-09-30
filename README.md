@@ -1,5 +1,5 @@
 # Custom Notepad
-Creation of a custom Notepad
+Creation of a custom Notepad available [here](https://nassimkoceir.github.io/custom-notepad/)
 
 ## An evolutive project
 My goal with this project is to create and app that takes notes, that saves it in the PC.
