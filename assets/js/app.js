@@ -53,7 +53,7 @@ function idNote(){
 	inputKey.dataset.key = id;
 	inputKey.dataset.date = dcreation;
 
-	setInterval(autosave, 1000);
+	timer = setInterval(autosave, 1000);
 
 	inputContent.removeEventListener("input", idNote);
 }
@@ -61,6 +61,8 @@ function idNote(){
 function noteDelete(key){
 	let cardKey = this.dataset.key;
 	if(cardKey == inputKey.dataset.key){
+		clearInterval(timer);
+		
 		delete(inputKey.dataset.key);
 		inputTitle.value = "";
 		inputContent.value = "";
@@ -69,7 +71,9 @@ function noteDelete(key){
 }
 
 function noteClear(){
-	delete(inputKey.dataset.key);
+	clearInterval(timer);
+
+	inputKey.removeAttribute("data-key");
 	inputTitle.value = "";
 	inputContent.value = "";
 
