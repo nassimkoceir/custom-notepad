@@ -10,19 +10,29 @@ class Note {
 let inputKey = document.getElementById("key");
 let inputTitle = document.getElementById("title");
 let inputContent = document.getElementById("content");
+let noteNew = document.getElementById("new-note");
 
 let history = document.getElementById("history");
 
 function allNotes(){
 	history.innerHTML = "";
 	for (var i = 0; i < localStorage.length; i++){
-	    let card = document.createElement("div")
+	    let card = document.createElement("div");
 		let key = parseInt(localStorage.key(i));
 		let item = JSON.parse(localStorage.getItem(key));
 
-		card.innerHTML = ${item.title} ${item.content};
+		let noteContent = item.content;
+		noteContent = noteContent.substring(0, 49);
 
-		history.appendChild(p);
+		card.setAttribute("class", "card");
+		card.innerHTML = `<div class="card-title">${item.title}</div><div class="card-content">${noteContent}</div> <a class="card-delete" data-key="${key}" href="#">Delete</a>`;
+
+		history.appendChild(card);
+	}
+
+	let cardEvent = document.querySelectorAll(".card-delete");
+	for(i=0; i<cardEvent.length; i++){
+		cardEvent[i].addEventListener('click', noteDelete);
 	}
 }
 
@@ -48,10 +58,30 @@ function idNote(){
 	inputContent.removeEventListener("input", idNote);
 }
 
+function noteDelete(key){
+	let cardKey = this.dataset.key;
+	if(cardKey == inputKey.dataset.key){
+		delete(inputKey.dataset.key);
+		inputTitle.value = "";
+		inputContent.value = "";
+	}
+	localStorage.removeItem(cardKey);
+}
+
+function noteClear(){
+	delete(inputKey.dataset.key);
+	inputTitle.value = "";
+	inputContent.value = "";
+
+	inputContent.addEventListener("input", idNote);
+}
+
 inputContent.addEventListener("input", idNote);
+
+noteNew.addEventListener("click", noteClear);
 
 allNotes();
 
-setInterval(allNotes, 5000);
+setInterval(allNotes, 1000);
 
 })();
