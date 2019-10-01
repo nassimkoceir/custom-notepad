@@ -25,7 +25,7 @@ function allNotes(){
 		noteContent = noteContent.substring(0, 49);
 
 		card.setAttribute("class", "card");
-		card.innerHTML = `<div class="card-title">${item.title}</div><div class="card-content">${noteContent}</div> <a class="card-delete" data-key="${key}" href="#">Delete</a>`;
+		card.innerHTML = `<div class="card-title">${item.title}</div><div class="card-content">${noteContent}</div> <a class="card-modify" data-key="${key}" href="#">Modify</a> <a class="card-delete" data-key="${key}" href="#">Delete</a>`;
 
 		history.appendChild(card);
 	}
@@ -62,7 +62,7 @@ function noteDelete(key){
 	let cardKey = this.dataset.key;
 	if(cardKey == inputKey.dataset.key){
 		clearInterval(timer);
-		
+
 		delete(inputKey.dataset.key);
 		inputTitle.value = "";
 		inputContent.value = "";
