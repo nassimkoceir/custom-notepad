@@ -64,6 +64,10 @@ h1 {
   color: #EF0000;
 }
 
+#history .card .card-modify {
+  color: #00A900;
+}
+
 footer {
   width: 100%;
   background: #dfdfdf;

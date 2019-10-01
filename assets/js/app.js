@@ -30,9 +30,14 @@ function allNotes(){
 		history.appendChild(card);
 	}
 
-	let cardEvent = document.querySelectorAll(".card-delete");
-	for(i=0; i<cardEvent.length; i++){
-		cardEvent[i].addEventListener('click', noteDelete);
+	let cardDelete = document.querySelectorAll(".card-delete");
+	for(i=0; i<cardDelete.length; i++){
+		cardDelete[i].addEventListener('click', noteDelete);
+	}
+
+	let cardModify = document.querySelectorAll(".card-modify");
+	for(i=0; i<cardModify.length; i++){
+		cardModify[i].addEventListener('click', noteModify);
 	}
 }
 
@@ -44,6 +49,10 @@ function autosave(){
 
 	let note = new Note(dcreation, title, content);
 	localStorage.setItem(id, JSON.stringify(note));
+
+	if(modify){
+		timer = setInterval(autosave, 1000);
+	}
 }
 
 function idNote(){
@@ -56,6 +65,21 @@ function idNote(){
 	timer = setInterval(autosave, 1000);
 
 	inputContent.removeEventListener("input", idNote);
+}
+
+function noteModify(key){
+	if(typeof timer !== 'undefined'){
+		clearInterval(timer);
+	}
+
+	let cardKey = this.dataset.key;
+	inputKey.dataset.key = cardKey;
+
+	let item = JSON.parse(localStorage.getItem(cardKey));
+	inputTitle.value = item.title;
+	inputContent.value = item.content;
+
+	inputContent.addEventListener("input", autosave(modify));
 }
 
 function noteDelete(key){
