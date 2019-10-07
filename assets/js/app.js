@@ -25,7 +25,10 @@ function allNotes(){
 		noteContent = noteContent.substring(0, 49);
 
 		card.setAttribute("class", "card");
-		card.innerHTML = `<div class="card-title">${item.title}</div><div class="card-content">${noteContent}</div> <a class="card-modify" data-key="${key}" href="#">Modify</a> <a class="card-delete" data-key="${key}" href="#">Delete</a> "ID: ${key}"`;
+		card.innerHTML = `<div class="card-title">${item.title}</div>
+		<div class="card-content">${noteContent}</div>
+		<div class="card-content">${item.dcreation}</div>
+		<div><a class="card-modify" data-key="${key}" href="#">Modify</a> <a class="card-delete" data-key="${key}" href="#">Delete</a></div>`;
 
 		history.appendChild(card);
 	}
@@ -65,18 +68,18 @@ function idNote(){
 
 function noteModify(key){
 	inputContent.removeEventListener("input", idNote);
-	
+
 	if(typeof timer !== 'undefined'){
 		clearInterval(timer);
 	}
 
 	let cardKey = this.dataset.key;
 	inputKey.dataset.key = cardKey;
-	inputKey.value = cardKey;
 
 	let item = JSON.parse(localStorage.getItem(cardKey));
 	inputTitle.value = item.title;
 	inputContent.value = item.content;
+	inputKey.dataset.date = item.dcreation;
 
 	inputContent.addEventListener("input", autosave);
 }
@@ -87,9 +90,9 @@ function noteDelete(key){
 		clearInterval(timer);
 
 		delete(inputKey.dataset.key);
+		delete(inputKey.dataset.date);
 		inputTitle.value = "";
 		inputContent.value = "";
-		inputKey.value = "";
 	}
 
 	localStorage.removeItem(cardKey);
@@ -101,9 +104,9 @@ function noteClear(){
 	}
 
 	inputKey.removeAttribute("data-key");
+	inputKey.removeAttribute("data-date");
 	inputTitle.value = "";
 	inputContent.value = "";
-	inputKey.value = "";
 
 	inputContent.addEventListener("input", idNote);
 }
