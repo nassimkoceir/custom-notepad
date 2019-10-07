@@ -25,7 +25,7 @@ function allNotes(){
 		noteContent = noteContent.substring(0, 49);
 
 		card.setAttribute("class", "card");
-		card.innerHTML = `<div class="card-title">${item.title}</div><div class="card-content">${noteContent}</div> <a class="card-modify" data-key="${key}" href="#">Modify</a> <a class="card-delete" data-key="${key}" href="#">Delete</a>`;
+		card.innerHTML = `<div class="card-title">${item.title}</div><div class="card-content">${noteContent}</div> <a class="card-modify" data-key="${key}" href="#">Modify</a> <a class="card-delete" data-key="${key}" href="#">Delete</a> "ID: ${key}"`;
 
 		history.appendChild(card);
 	}
@@ -49,15 +49,11 @@ function autosave(){
 
 	let note = new Note(dcreation, title, content);
 	localStorage.setItem(id, JSON.stringify(note));
-
-	if(modify){
-		timer = setInterval(autosave, 1000);
-	}
 }
 
 function idNote(){
-	let dcreation = new Date();
-	let id = dcreation.getTime();
+	var dcreation = new Date();
+	var id = dcreation.getTime();
 
 	inputKey.dataset.key = id;
 	inputKey.dataset.date = dcreation;
@@ -68,18 +64,21 @@ function idNote(){
 }
 
 function noteModify(key){
+	inputContent.removeEventListener("input", idNote);
+	
 	if(typeof timer !== 'undefined'){
 		clearInterval(timer);
 	}
 
 	let cardKey = this.dataset.key;
 	inputKey.dataset.key = cardKey;
+	inputKey.value = cardKey;
 
 	let item = JSON.parse(localStorage.getItem(cardKey));
 	inputTitle.value = item.title;
 	inputContent.value = item.content;
 
-	inputContent.addEventListener("input", autosave(modify));
+	inputContent.addEventListener("input", autosave);
 }
 
 function noteDelete(key){
@@ -90,16 +89,21 @@ function noteDelete(key){
 		delete(inputKey.dataset.key);
 		inputTitle.value = "";
 		inputContent.value = "";
+		inputKey.value = "";
 	}
+
 	localStorage.removeItem(cardKey);
 }
 
 function noteClear(){
-	clearInterval(timer);
+	if(typeof timer !== 'undefined'){
+		clearInterval(timer);
+	}
 
 	inputKey.removeAttribute("data-key");
 	inputTitle.value = "";
 	inputContent.value = "";
+	inputKey.value = "";
 
 	inputContent.addEventListener("input", idNote);
 }
